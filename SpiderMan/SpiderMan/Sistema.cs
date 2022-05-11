@@ -75,12 +75,17 @@ namespace SpiderMan
 
         #endregion
 
-        public Sistema(string nuevoNombre, string nuevaDescripcion, string nuevaDireccionIP)
+        public Sistema(string nuevoNombre, string nuevaDescripcion, string nuevaDireccionIP, string nuevoEstado)
         {
             this.nombre = nuevoNombre;
             this.descripcion = nuevaDescripcion;
             this.direccionIP = nuevaDireccionIP;
-            this.estado = EstadosDeSistema.Habilitado;
+
+            EstadosDeSistema es;
+            if (Enum.TryParse(nuevoEstado, out es))
+                this.estado = es;
+            else
+                this.estado = EstadosDeSistema.Deshabilitado;
         }
 
         public Sistema(string nuevoNombre, string nuevaDescripcion, string nuevaDireccionIP, EstadosDeSistema nuevoEstado)
@@ -105,28 +110,32 @@ namespace SpiderMan
         {
             List<Sistema> listaParaDevolver = new List<Sistema>();
 
-            // se Carga todo el XML en el objeto libro
-            XDocument xmlSistemas = XDocument.Load("c:\\Temp\\Sistemas.xml", LoadOptions.None);
-            //usa éste siguiente para cargar desde texto (string) en vez de un archivo
-            //XDocument doc = XDocument.Parse(texto);
-
-            //Obtener objeto librosEjemplo
-            XElement listaSistemas = xmlSistemas.Element("Sistemas");
-
-            //Obtener lista de libros dentro de librosEjemplo
-            IEnumerable<XElement> sistemas = listaSistemas.Descendants("Sistema");
-
-            //has un foreach y por cada uno haz lo que tengas que hacer
-            foreach (XElement sistema in sistemas)
+            //Se verifica que exista el archivo de sistemas.
+            if (File.Exists("c:\\Temp\\Sistemas.xml"))
             {
-                string nombre = sistema.Element("Nombre").Value;
-                string descripcion = sistema.Element("Descripcion").Value;
-                string direccionIP = sistema.Element("DireccionIP").Value;
-                string estado = sistema.Element("Estado").Value;
+                // se Carga todo el XML en el objeto libro
+                XDocument xmlSistemas = XDocument.Load("c:\\Temp\\Sistemas.xml", LoadOptions.None);
+                //usa éste siguiente para cargar desde texto (string) en vez de un archivo
+                //XDocument doc = XDocument.Parse(texto);
 
-                Sistema nuevosSistema = new Sistema(nombre, descripcion, direccionIP);
+                //Obtener objeto librosEjemplo
+                XElement listaSistemas = xmlSistemas.Element("Sistemas");
 
-                listaParaDevolver.Add(nuevosSistema);
+                //Obtener lista de libros dentro de librosEjemplo
+                IEnumerable<XElement> sistemas = listaSistemas.Descendants("Sistema");
+
+                //has un foreach y por cada uno haz lo que tengas que hacer
+                foreach (XElement sistema in sistemas)
+                {
+                    string nombre = sistema.Element("Nombre").Value;
+                    string descripcion = sistema.Element("Descripcion").Value;
+                    string direccionIP = sistema.Element("DireccionIP").Value;
+                    string estado = sistema.Element("Estado").Value;
+
+                    Sistema nuevosSistema = new Sistema(nombre, descripcion, direccionIP, estado);
+
+                    listaParaDevolver.Add(nuevosSistema);
+                }
             }
 
             return listaParaDevolver;
@@ -158,7 +167,7 @@ namespace SpiderMan
                 XmlText texto_Nombre = doc.CreateTextNode(s.Nombre);
                 XmlText texto_Descripcion = doc.CreateTextNode(s.Descripcion);
                 XmlText texto_DireccionIP = doc.CreateTextNode(s.DireccionIP);
-                XmlText texto_Estado = doc.CreateTextNode("un estado qualuquiera");
+                XmlText texto_Estado = doc.CreateTextNode(((int)s.estado).ToString());
 
                 nombre.AppendChild(texto_Nombre);
                 descripcion.AppendChild(texto_Descripcion);
@@ -168,6 +177,17 @@ namespace SpiderMan
 
             doc.Save("C://Temp//Sistemas.xml");
         }
+
+
+        public void Habilitar()
+        {
+            this.estado = EstadosDeSistema.Habilitado;
+        }
+
+        public void Deshabilitar()
+        {
+            this.estado = EstadosDeSistema.Deshabilitado;
+        }  
 
         public void Actualizar(string nuevaDescripcion, string nuevaDireccionIP)
         {

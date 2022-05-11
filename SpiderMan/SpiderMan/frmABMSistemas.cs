@@ -38,12 +38,18 @@ namespace SpiderMan
 
         private void frmABMSistemas_Load(object sender, EventArgs e)
         {
+
+            cmbEstados.Items.Add(EstadosDeSistema.Habilitado.ToString());
+            cmbEstados.Items.Add(EstadosDeSistema.Deshabilitado.ToString());
+
             if (modoEdicion)
             {
                 this.Text = "Editar Sistema";
                 btnGuardar.Text = "Aplicar";
                 lblEstadoNuevo.Visible = false;
                 cmbEstados.Visible = true;
+                txtNombreSistema.Enabled = false;
+                btnAceptar.Visible = false;
             }
             else
             {
@@ -51,6 +57,8 @@ namespace SpiderMan
                 btnGuardar.Text = "Guardar";
                 lblEstadoNuevo.Visible = true;
                 cmbEstados.Visible = false;
+                txtNombreSistema.Enabled = true;
+                btnAceptar.Visible = true;
             }
 
             if (sistemaActual != null )
@@ -58,6 +66,7 @@ namespace SpiderMan
                 txtNombreSistema.Text = sistemaActual.Nombre;
                 txtDescripcionSistema.Text = sistemaActual.Descripcion;
                 txtDireccionIPSistema.Text = sistemaActual.DireccionIP;
+                cmbEstados.Text = sistemaActual.Estado.ToString();  
             }
         }
 
@@ -77,11 +86,22 @@ namespace SpiderMan
             if (modoEdicion)
             {
                 sistemaActual.Actualizar(txtDescripcionSistema.Text, txtDireccionIPSistema.Text);
+
+                if (sistemaActual.Estado.ToString() != cmbEstados.Text)
+                {
+                    if (cmbEstados.Text == EstadosDeSistema.Habilitado.ToString())
+                    {
+                        sistemaActual.Habilitar();
+                    }
+                    else
+                    {
+                        sistemaActual.Deshabilitar();
+                    }
+                }
             }
             else
             {
-                sistemaActual = new Sistema(txtNombreSistema.Text, txtDescripcionSistema.Text, txtDireccionIPSistema.Text);
-
+                sistemaActual = new Sistema(txtNombreSistema.Text, txtDescripcionSistema.Text, txtDireccionIPSistema.Text, ((int)EstadosDeSistema.Habilitado).ToString());
             }
         }
     }
