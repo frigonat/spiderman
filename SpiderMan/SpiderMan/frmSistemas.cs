@@ -26,13 +26,14 @@ namespace SpiderMan
         private void frmSistemas_Load(object sender, EventArgs e)
         {
             sistemasConfigurados = new List<Sistema>();
-
             recuperarSistemas();
-
             modificacionesPendientes = false;
         }
 
 
+        /// <summary>
+        /// Recupera la lista de sistemas del almacenamiento.-
+        /// </summary>
         private void recuperarSistemas()
         {
             cargaEnProgreso = true;
@@ -59,7 +60,9 @@ namespace SpiderMan
                 sistemaActual = null;
             }
 
+            tsslCantidadSistemas.Text = sistemasConfigurados.Count.ToString();
             cargaEnProgreso = false;
+            modificacionesPendientes = true;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -69,6 +72,15 @@ namespace SpiderMan
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            agregarSistema();
+        }
+
+
+        /// <summary>
+        /// Muestra el formulario para agregar nuevos sistemas y si se realiza la operación, se adiciona el nuevo sistema a la lista.-
+        /// </summary>
+        private void agregarSistema()
         {
             frmABMSistemas f = new frmABMSistemas();
             Sistema nuevoSistema = f.Mostrar();
@@ -86,27 +98,35 @@ namespace SpiderMan
 
                 modificacionesPendientes = true;
             }
+
+            tsslCantidadSistemas.Text = sistemasConfigurados.Count.ToString();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            editarSistemaActual();
+        }
+
+        /// <summary>
+        /// Muestra el formulario de edición de sistemas para permitir la modificación de datos del sistema actual.-
+        /// </summary>
+        private void editarSistemaActual()
+        {
             frmABMSistemas f = new frmABMSistemas();
             Sistema sistemaModificado = f.Mostrar(sistemaActual);
-
-            
 
             if (sistemaModificado != null)
             {
                 sistemaActual = sistemaModificado;
 
-                modificacionesPendientes = true;
-                
                 sistemasConfigurados.RemoveAll(x => x.Nombre == sistemaActual.Nombre);
                 sistemasConfigurados.Add(sistemaActual);
 
                 dgvSistemas.Rows[indiceSistemaModificado].Cells[colDescripcionSistema.Name].Value = sistemaActual.Descripcion;
                 dgvSistemas.Rows[indiceSistemaModificado].Cells[colDireccionIP.Name].Value = sistemaActual.DireccionIP;
                 dgvSistemas.Rows[indiceSistemaModificado].Cells[colEstadoSistema.Name].Value = sistemaActual.Estado;
+
+                modificacionesPendientes = true;
             }
         }
 
@@ -115,12 +135,7 @@ namespace SpiderMan
             if (modificacionesPendientes)
             {
                 if (MessageBox.Show("Hay modificaciones pendientes. ¿Desea conservarlas?", "ATENCION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
                     Sistema.Guardar(sistemasConfigurados);
-                }
-
-
-
             }
         }
 
@@ -134,12 +149,59 @@ namespace SpiderMan
                     sistemaActual = sistemasConfigurados.Find(x =>  x.Nombre == nombreElegido);
 
                     indiceSistemaModificado = dgvSistemas.CurrentRow.Index;
-
-                    label1.Text = sistemaActual.DireccionIP;
-                    label2.Text = sistemaActual.Descripcion;
-                    label3.Text = indiceSistemaModificado.ToString();
                 }
             }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            eliminarSistemaActual();
+        }
+
+        /// <summary>
+        /// Elimina el sistema actual, si es que hay uno.-
+        /// </summary>
+        private void eliminarSistemaActual()
+        {
+            if (sistemaActual != null)
+            {
+                string mensaje = "¿Desea realmente eliminar el sistema " + sistemaActual.Nombre + "?";
+
+                if (MessageBox.Show(mensaje, "Eliminación de Sistemas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    sistemasConfigurados.Remove(sistemaActual);
+                    
+                    dgvSistemas.Rows.RemoveAt(dgvSistemas.CurrentRow.Index);
+                    tsslCantidadSistemas.Text = sistemasConfigurados.Count.ToString();
+                    modificacionesPendientes = true;
+                }
+            }
+        }
+
+        private void tslRefrescar_Click(object sender, EventArgs e)
+        {
+            recuperarSistemas();
+        }
+
+        private void tslGuardar_Click(object sender, EventArgs e)
+        {
+            Sistema.Guardar(sistemasConfigurados);
+            modificacionesPendientes = false;
+        }
+
+        private void tslEliminar_Click(object sender, EventArgs e)
+        {
+            eliminarSistemaActual();
+        }
+
+        private void tslEditar_Click(object sender, EventArgs e)
+        {
+            editarSistemaActual();
+        }
+
+        private void tslAgregar_Click(object sender, EventArgs e)
+        {
+            agregarSistema();
         }
     }
 }

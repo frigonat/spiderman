@@ -75,6 +75,13 @@ namespace SpiderMan
 
         #endregion
 
+        /// <summary>
+        /// Crea un nuevo sistema con los datos recibidos como parámetros.-
+        /// </summary>
+        /// <param name="nuevoNombre">Nombre para el nuevo sistema.-</param>
+        /// <param name="nuevaDescripcion">Descripción para el nuevo sistema.-</param>
+        /// <param name="nuevaDireccionIP">Dirección IP (o DNS) para el nuevo sistema.-</param>
+        /// <param name="nuevoEstado">Estado para el nuevo sistema (1=Habilitado / 2=Deshabilitado)</param>
         public Sistema(string nuevoNombre, string nuevaDescripcion, string nuevaDireccionIP, string nuevoEstado)
         {
             this.nombre = nuevoNombre;
@@ -88,6 +95,13 @@ namespace SpiderMan
                 this.estado = EstadosDeSistema.Deshabilitado;
         }
 
+        /// <summary>
+        /// Crea un nuevo sistema con los datos recibidos como parámetros.-
+        /// </summary>
+        /// <param name="nuevoNombre">Nombre para el nuevo sistema.-</param>
+        /// <param name="nuevaDescripcion">Descripción para el nuevo sistema.-</param>
+        /// <param name="nuevaDireccionIP">Dirección IP (o DNS) para el nuevo sistema.-</param>
+        /// <param name="nuevoEstado">Estado para el nuevo sistema.-</param>
         public Sistema(string nuevoNombre, string nuevaDescripcion, string nuevaDireccionIP, EstadosDeSistema nuevoEstado)
         {
             this.nombre = nuevoNombre;
@@ -96,16 +110,45 @@ namespace SpiderMan
             this.estado = nuevoEstado;
         }
 
-
+        /// <summary>
+        /// Obtiene de la lista de sistemas configurados, aquel cuyo nombre coincida con el recibido como parámetro.-
+        /// </summary>
+        /// <param name="nombreBuscado"></param>
+        /// <exception cref="SistemaNoEncontradoException"></exception>
         public Sistema(string nombreBuscado)
         {
+            List<Sistema> sistemasConfigurados = new List<Sistema>();
+            
+            sistemasConfigurados = Sistema.Obtener();
+
+            int x = sistemasConfigurados.FindIndex (s => s.nombre == nombreBuscado);    
+            if (x == -1)
+            {
+                throw new SistemaNoEncontradoException();
+            }
+            else
+            {
+                Sistema sistemaEncontrado = sistemasConfigurados.Find(s => s.Nombre == nombreBuscado);
+                this.nombre = sistemaEncontrado.nombre; 
+                this.descripcion = sistemaEncontrado.descripcion; 
+                this.direccionIP = sistemaEncontrado.direccionIP;
+                this.estado = sistemaEncontrado.Estado;
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int VerificarConexion()
         {
             return 0;
         }
 
+        /// <summary>
+        /// Obtiene la lista de sistemas configurados.-
+        /// </summary>
+        /// <returns></returns>
         public static List<Sistema> Obtener()
         {
             List<Sistema> listaParaDevolver = new List<Sistema>();
@@ -124,7 +167,7 @@ namespace SpiderMan
                 //Obtener lista de libros dentro de librosEjemplo
                 IEnumerable<XElement> sistemas = listaSistemas.Descendants("Sistema");
 
-                //has un foreach y por cada uno haz lo que tengas que hacer
+                //haz un foreach y por cada uno haz lo que tengas que hacer
                 foreach (XElement sistema in sistemas)
                 {
                     string nombre = sistema.Element("Nombre").Value;
@@ -141,6 +184,10 @@ namespace SpiderMan
             return listaParaDevolver;
         }
 
+        /// <summary>
+        /// Guarda en el almacenamiento la lista de sistemas.-
+        /// </summary>
+        /// <param name="sistemas"></param>
         public static void Guardar(List<Sistema> sistemas)
         {
             XmlDocument doc = new XmlDocument();
@@ -178,17 +225,27 @@ namespace SpiderMan
             doc.Save("C://Temp//Sistemas.xml");
         }
 
-
+        /// <summary>
+        /// Habilita el sistema actual.-
+        /// </summary>
         public void Habilitar()
         {
             this.estado = EstadosDeSistema.Habilitado;
         }
 
+        /// <summary>
+        /// Deshabilita el sistema actual.-
+        /// </summary>
         public void Deshabilitar()
         {
             this.estado = EstadosDeSistema.Deshabilitado;
-        }  
+        }
 
+        /// <summary>
+        /// Actualiza el sistema actual con los datos recibidos como parámetro.-
+        /// </summary>
+        /// <param name="nuevaDescripcion">Nueva descripción.</param>
+        /// <param name="nuevaDireccionIP">Nueva dirección IP.</param>
         public void Actualizar(string nuevaDescripcion, string nuevaDireccionIP)
         {
             this.descripcion = nuevaDescripcion;

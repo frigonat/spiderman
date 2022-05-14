@@ -1,16 +1,14 @@
 spiderman
 ---------
 
-eliminar un sistema
-	codigo en el boton
-	consulta con msgbox
-	borrado de la lista en memoria
-	actualización del xml
+anchor del formulario principal
+colores alternos en las lineas de la grilla
+agregar validaciones en los constructores de la clase Sistema
 
-
-
-editar según la seleccion de la grilla; si grilla vacía => no se puede editar
-recuperar automaticamente al abrir el form Sistemas. Contemplar que no haya archivo XML
+editar según la seleccion de la grilla; 
+	si grilla vacía => no se puede editar
+recuperar automaticamente al abrir el form Sistemas. 
+	Contemplar que no haya archivo XML
 guardar automáticamente al cerrar el form Sistemas. Habilitar el botón o no de acuerdo a si hay cambios
 
 

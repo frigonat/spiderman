@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EstadosDeSistema.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="frmABMSistemas.cs">
       <SubType>Form</SubType>
     </Compile>

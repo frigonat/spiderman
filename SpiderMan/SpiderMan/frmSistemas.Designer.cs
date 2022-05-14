@@ -31,14 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSistemas));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslCantidadSistemas = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tslAgregar = new System.Windows.Forms.ToolStripButton();
+            this.tslEditar = new System.Windows.Forms.ToolStripButton();
+            this.tslEliminar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tslGuardar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tslRefrescar = new System.Windows.Forms.ToolStripButton();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
@@ -47,10 +50,7 @@
             this.colDescripcionSistema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDireccionIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstadoSistema = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnEliminar = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSistemas)).BeginInit();
@@ -60,12 +60,12 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
+            this.tsslCantidadSistemas,
             this.toolStripStatusLabel3,
             this.toolStripStatusLabel4});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 515);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 364);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(781, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(755, 24);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -80,16 +80,16 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 19);
             this.toolStripStatusLabel1.Text = "...";
             // 
-            // toolStripStatusLabel2
+            // tsslCantidadSistemas
             // 
-            this.toolStripStatusLabel2.AutoSize = false;
-            this.toolStripStatusLabel2.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            this.tsslCantidadSistemas.AutoSize = false;
+            this.tsslCantidadSistemas.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.toolStripStatusLabel2.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 19);
-            this.toolStripStatusLabel2.Text = "...";
+            this.tsslCantidadSistemas.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
+            this.tsslCantidadSistemas.Name = "tsslCantidadSistemas";
+            this.tsslCantidadSistemas.Size = new System.Drawing.Size(118, 19);
+            this.tsslCantidadSistemas.Text = "...";
             // 
             // toolStripStatusLabel3
             // 
@@ -116,55 +116,85 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
+            this.tslAgregar,
+            this.tslEditar,
+            this.tslEliminar,
+            this.toolStripSeparator1,
+            this.tslGuardar,
+            this.toolStripSeparator2,
+            this.tslRefrescar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(781, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(755, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // tslAgregar
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.tslAgregar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tslAgregar.Image = ((System.Drawing.Image)(resources.GetObject("tslAgregar.Image")));
+            this.tslAgregar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tslAgregar.Name = "tslAgregar";
+            this.tslAgregar.Size = new System.Drawing.Size(23, 22);
+            this.tslAgregar.Text = "Agregar sistema...";
+            this.tslAgregar.Click += new System.EventHandler(this.tslAgregar_Click);
             // 
-            // toolStripButton2
+            // tslEditar
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
+            this.tslEditar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tslEditar.Image = ((System.Drawing.Image)(resources.GetObject("tslEditar.Image")));
+            this.tslEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tslEditar.Name = "tslEditar";
+            this.tslEditar.Size = new System.Drawing.Size(23, 22);
+            this.tslEditar.Text = "Editar el sistema actual";
+            this.tslEditar.Click += new System.EventHandler(this.tslEditar_Click);
             // 
-            // toolStripButton3
+            // tslEliminar
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
+            this.tslEliminar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tslEliminar.Image = ((System.Drawing.Image)(resources.GetObject("tslEliminar.Image")));
+            this.tslEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tslEliminar.Name = "tslEliminar";
+            this.tslEliminar.Size = new System.Drawing.Size(23, 22);
+            this.tslEliminar.Text = "toolStripButton3";
+            this.tslEliminar.ToolTipText = "Eliminar sistema actual";
+            this.tslEliminar.Click += new System.EventHandler(this.tslEliminar_Click);
             // 
-            // button1
+            // toolStripSeparator1
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(572, 310);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "&Recuperar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tslGuardar
+            // 
+            this.tslGuardar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tslGuardar.Image = ((System.Drawing.Image)(resources.GetObject("tslGuardar.Image")));
+            this.tslGuardar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tslGuardar.Name = "tslGuardar";
+            this.tslGuardar.Size = new System.Drawing.Size(23, 22);
+            this.tslGuardar.Text = "toolStripButton1";
+            this.tslGuardar.ToolTipText = "Guardar";
+            this.tslGuardar.Click += new System.EventHandler(this.tslGuardar_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tslRefrescar
+            // 
+            this.tslRefrescar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tslRefrescar.Image = ((System.Drawing.Image)(resources.GetObject("tslRefrescar.Image")));
+            this.tslRefrescar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tslRefrescar.Name = "tslRefrescar";
+            this.tslRefrescar.Size = new System.Drawing.Size(23, 22);
+            this.tslRefrescar.Text = "toolStripButton2";
+            this.tslRefrescar.ToolTipText = "Refrescar";
+            this.tslRefrescar.Click += new System.EventHandler(this.tslRefrescar_Click);
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(695, 310);
+            this.btnGuardar.Location = new System.Drawing.Point(663, 322);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 4;
@@ -174,7 +204,7 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(12, 310);
+            this.btnAgregar.Location = new System.Drawing.Point(12, 322);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(75, 23);
             this.btnAgregar.TabIndex = 5;
@@ -184,7 +214,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(133, 310);
+            this.btnEditar.Location = new System.Drawing.Point(113, 322);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(75, 23);
             this.btnEditar.TabIndex = 6;
@@ -205,7 +235,7 @@
             this.dgvSistemas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvSistemas.Location = new System.Drawing.Point(14, 41);
             this.dgvSistemas.Name = "dgvSistemas";
-            this.dgvSistemas.Size = new System.Drawing.Size(756, 231);
+            this.dgvSistemas.Size = new System.Drawing.Size(724, 263);
             this.dgvSistemas.TabIndex = 7;
             this.dgvSistemas.SelectionChanged += new System.EventHandler(this.dgvSistemas_SelectionChanged);
             // 
@@ -231,56 +261,26 @@
             this.colEstadoSistema.Name = "colEstadoSistema";
             this.colEstadoSistema.Width = 150;
             // 
-            // button2
+            // btnEliminar
             // 
-            this.button2.Location = new System.Drawing.Point(344, 310);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Eliminar";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(329, 386);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "label1";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(332, 446);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(668, 446);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "label3";
+            this.btnEliminar.Location = new System.Drawing.Point(211, 322);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminar.TabIndex = 8;
+            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // frmSistemas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(781, 539);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(755, 388);
+            this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.dgvSistemas);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnGuardar);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -303,14 +303,13 @@
 
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton tslAgregar;
+        private System.Windows.Forms.ToolStripButton tslEditar;
+        private System.Windows.Forms.ToolStripButton tslEliminar;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel tsslCantidadSistemas;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnEditar;
@@ -319,10 +318,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcionSistema;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDireccionIP;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstadoSistema;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton tslGuardar;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton tslRefrescar;
     }
 }
 

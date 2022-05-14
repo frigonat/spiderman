@@ -38,7 +38,7 @@ namespace SpiderMan
 
         private void frmABMSistemas_Load(object sender, EventArgs e)
         {
-
+            tslOperacion.Text = "";
             cmbEstados.Items.Add(EstadosDeSistema.Habilitado.ToString());
             cmbEstados.Items.Add(EstadosDeSistema.Deshabilitado.ToString());
 
@@ -49,7 +49,6 @@ namespace SpiderMan
                 lblEstadoNuevo.Visible = false;
                 cmbEstados.Visible = true;
                 txtNombreSistema.Enabled = false;
-                btnAceptar.Visible = false;
             }
             else
             {
@@ -58,7 +57,6 @@ namespace SpiderMan
                 lblEstadoNuevo.Visible = true;
                 cmbEstados.Visible = false;
                 txtNombreSistema.Enabled = true;
-                btnAceptar.Visible = true;
             }
 
             if (sistemaActual != null )
@@ -85,24 +83,98 @@ namespace SpiderMan
         {
             if (modoEdicion)
             {
-                sistemaActual.Actualizar(txtDescripcionSistema.Text, txtDireccionIPSistema.Text);
-
-                if (sistemaActual.Estado.ToString() != cmbEstados.Text)
+                try
                 {
-                    if (cmbEstados.Text == EstadosDeSistema.Habilitado.ToString())
+                    validarGUI();
+                    sistemaActual.Actualizar(txtDescripcionSistema.Text, txtDireccionIPSistema.Text);
+
+                    if (sistemaActual.Estado.ToString() != cmbEstados.Text)
                     {
-                        sistemaActual.Habilitar();
+                        if (cmbEstados.Text == EstadosDeSistema.Habilitado.ToString())
+                            sistemaActual.Habilitar();
+                        else
+                            sistemaActual.Deshabilitar();
                     }
-                    else
-                    {
-                        sistemaActual.Deshabilitar();
-                    }
+
+                    tslOperacion.Text = "Sistema Actualizado!";
+                    timer1.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
             {
-                sistemaActual = new Sistema(txtNombreSistema.Text, txtDescripcionSistema.Text, txtDireccionIPSistema.Text, ((int)EstadosDeSistema.Habilitado).ToString());
+                try
+                {
+                    validarGUI();
+                    sistemaActual = new Sistema(txtNombreSistema.Text, txtDescripcionSistema.Text, txtDireccionIPSistema.Text, ((int)EstadosDeSistema.Habilitado).ToString());
+                    txtNombreSistema.Text = "";
+                    txtDescripcionSistema.Text = "";
+                    txtDireccionIPSistema.Text = "";
+                    tslOperacion.Text = "Sistema Guardado!";
+                    timer1.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
             }
+        }
+
+        /// <summary>
+        /// Valida los datos ingresados tanto para el alta como para la edición de un sistema.-
+        /// </summary>
+        private void validarGUI()
+        {
+
+            //Se valida que se ingrese la descripción del sistema.-
+            if (txtDescripcionSistema.TextLength <= 0)
+            {
+                txtDescripcionSistema.Focus();
+                throw new SistemaNoCreadoException("Debe ingresarse la descripción para el sistema.");
+            }
+
+            //Se valida que se ingrese la IP del sistema.-
+            if (txtDireccionIPSistema.TextLength <= 0)
+            {
+                txtDireccionIPSistema.Focus();
+                throw new SistemaNoCreadoException("Debe ingresarse la dirección IP o DNS del sistema.");
+            }
+
+            if (!modoEdicion)
+            {
+                //Se valida que se ingrese el nombre del sistema.-
+                if (txtNombreSistema.TextLength <= 0)
+                {
+                    txtNombreSistema.Focus();
+                    throw new SistemaNoCreadoException("Debe ingresarse el nombre del sistema.");
+                }
+
+                //Se valida que el nombre del sistema no exista previamente.-
+                try
+                {
+                    Sistema s = new Sistema(txtNombreSistema.Text);
+                    throw new SistemaNoCreadoException("Ya existe un sistema con el nombre ingresado [" + txtNombreSistema.Text + "]");
+                }
+                catch (SistemaNoEncontradoException ex)
+                {
+                    //do nothing
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            tslOperacion.Text = "";
+            timer1.Stop();  
         }
     }
 }
