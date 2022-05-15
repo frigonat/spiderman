@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -74,6 +75,10 @@ namespace SpiderMan
         }
 
         #endregion
+
+        private static string rutaArchivo;
+
+        private static string nombreArchivo = "Sistemas.xml";
 
         /// <summary>
         /// Crea un nuevo sistema con los datos recibidos como parámetros.-
@@ -151,13 +156,16 @@ namespace SpiderMan
         /// <returns></returns>
         public static List<Sistema> Obtener()
         {
+            Assembly myAssembly = Assembly.GetExecutingAssembly();
+            rutaArchivo = Path.GetDirectoryName(myAssembly.Location);
             List<Sistema> listaParaDevolver = new List<Sistema>();
 
             //Se verifica que exista el archivo de sistemas.
-            if (File.Exists("c:\\Temp\\Sistemas.xml"))
+            if (File.Exists(rutaArchivo + Path.DirectorySeparatorChar + nombreArchivo))
             {
                 // se Carga todo el XML en el objeto libro
-                XDocument xmlSistemas = XDocument.Load("c:\\Temp\\Sistemas.xml", LoadOptions.None);
+                //XDocument xmlSistemas = XDocument.Load("c:\\Temp\\Sistemas.xml", LoadOptions.None);
+                XDocument xmlSistemas = XDocument.Load(rutaArchivo + Path.DirectorySeparatorChar + nombreArchivo);
                 //usa éste siguiente para cargar desde texto (string) en vez de un archivo
                 //XDocument doc = XDocument.Parse(texto);
 
@@ -176,7 +184,6 @@ namespace SpiderMan
                     string estado = sistema.Element("Estado").Value;
 
                     Sistema nuevosSistema = new Sistema(nombre, descripcion, direccionIP, estado);
-
                     listaParaDevolver.Add(nuevosSistema);
                 }
             }
@@ -222,7 +229,7 @@ namespace SpiderMan
                 estado.AppendChild(texto_Estado);
             }
 
-            doc.Save("C://Temp//Sistemas.xml");
+            doc.Save(rutaArchivo + Path.DirectorySeparatorChar + nombreArchivo);
         }
 
         /// <summary>

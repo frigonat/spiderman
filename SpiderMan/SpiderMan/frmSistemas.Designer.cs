@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSistemas));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslCantidadSistemas = new System.Windows.Forms.ToolStripStatusLabel();
@@ -46,11 +47,11 @@
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.dgvSistemas = new System.Windows.Forms.DataGridView();
+            this.btnEliminar = new System.Windows.Forms.Button();
             this.colNombreSistema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescripcionSistema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDireccionIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstadoSistema = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEliminar = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSistemas)).BeginInit();
@@ -65,7 +66,7 @@
             this.toolStripStatusLabel4});
             this.statusStrip1.Location = new System.Drawing.Point(0, 364);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(755, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(713, 24);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -125,7 +126,7 @@
             this.tslRefrescar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(755, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(713, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -194,7 +195,8 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(663, 322);
+            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGuardar.Location = new System.Drawing.Point(621, 322);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 4;
@@ -204,6 +206,7 @@
             // 
             // btnAgregar
             // 
+            this.btnAgregar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAgregar.Location = new System.Drawing.Point(12, 322);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(75, 23);
@@ -214,6 +217,7 @@
             // 
             // btnEditar
             // 
+            this.btnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnEditar.Location = new System.Drawing.Point(113, 322);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(75, 23);
@@ -226,6 +230,11 @@
             // 
             this.dgvSistemas.AllowUserToAddRows = false;
             this.dgvSistemas.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dgvSistemas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvSistemas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSistemas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSistemas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNombreSistema,
@@ -235,9 +244,20 @@
             this.dgvSistemas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvSistemas.Location = new System.Drawing.Point(14, 41);
             this.dgvSistemas.Name = "dgvSistemas";
-            this.dgvSistemas.Size = new System.Drawing.Size(724, 263);
+            this.dgvSistemas.Size = new System.Drawing.Size(682, 263);
             this.dgvSistemas.TabIndex = 7;
             this.dgvSistemas.SelectionChanged += new System.EventHandler(this.dgvSistemas_SelectionChanged);
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEliminar.Location = new System.Drawing.Point(211, 322);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminar.TabIndex = 8;
+            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // colNombreSistema
             // 
@@ -257,25 +277,15 @@
             // 
             // colEstadoSistema
             // 
+            this.colEstadoSistema.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colEstadoSistema.HeaderText = "Estado";
             this.colEstadoSistema.Name = "colEstadoSistema";
-            this.colEstadoSistema.Width = 150;
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.Location = new System.Drawing.Point(211, 322);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(75, 23);
-            this.btnEliminar.TabIndex = 8;
-            this.btnEliminar.Text = "Eliminar";
-            this.btnEliminar.UseVisualStyleBackColor = true;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // frmSistemas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(755, 388);
+            this.ClientSize = new System.Drawing.Size(713, 388);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.dgvSistemas);
             this.Controls.Add(this.btnEditar);
@@ -314,15 +324,15 @@
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.DataGridView dgvSistemas;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNombreSistema;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcionSistema;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDireccionIP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colEstadoSistema;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tslGuardar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tslRefrescar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNombreSistema;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescripcionSistema;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDireccionIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEstadoSistema;
     }
 }
 

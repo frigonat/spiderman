@@ -15,6 +15,7 @@ namespace SpiderMan
         private bool modoEdicion;
         private Sistema sistemaActual;
 
+        //Muestra el formulario de ABM de Sistemas preparado para agregar un nuevo sistema a la colección.-
         public Sistema Mostrar()
         {
             modoEdicion = false;
@@ -23,6 +24,7 @@ namespace SpiderMan
             return sistemaActual;
         }
 
+        //Muestra el formulario de ABM de Sistemas preparado para editar el sistema que se recibe como parámetro.-
         public Sistema Mostrar(Sistema s)
         {
             modoEdicion = true;
@@ -68,14 +70,14 @@ namespace SpiderMan
             }
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
-            sistemaActual = null;
             this.Close();
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
+            sistemaActual = null;
             this.Close();
         }
 
@@ -124,6 +126,12 @@ namespace SpiderMan
             }
         }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            tslOperacion.Text = "";
+            timer1.Stop();
+        }
+
         /// <summary>
         /// Valida los datos ingresados tanto para el alta como para la edición de un sistema.-
         /// </summary>
@@ -169,12 +177,6 @@ namespace SpiderMan
                 }
             }
 
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            tslOperacion.Text = "";
-            timer1.Stop();  
         }
     }
 }

@@ -30,39 +30,20 @@ namespace SpiderMan
             modificacionesPendientes = false;
         }
 
-
-        /// <summary>
-        /// Recupera la lista de sistemas del almacenamiento.-
-        /// </summary>
-        private void recuperarSistemas()
+        private void btnAgregar_Click(object sender, EventArgs e)
         {
-            cargaEnProgreso = true;
-            sistemasConfigurados = Sistema.Obtener();
+            agregarSistema();
+        }
 
-            dgvSistemas.Rows.Clear();
-            object[] valores = new object[8];
-            foreach (Sistema s in sistemasConfigurados)
-            {
-                valores[0] = s.Nombre;
-                valores[1] = s.Descripcion;
-                valores[2] = s.DireccionIP;
-                valores[3] = s.Estado.ToString();
-                dgvSistemas.Rows.Add(valores);
-            }
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (sistemaActual != null)  
+                editarSistemaActual();
+        }
 
-            if (sistemasConfigurados.Count > 0)
-            {
-                indiceSistemaModificado = 0;
-                sistemaActual = sistemasConfigurados[0];
-            }
-            else
-            {
-                sistemaActual = null;
-            }
-
-            tsslCantidadSistemas.Text = sistemasConfigurados.Count.ToString();
-            cargaEnProgreso = false;
-            modificacionesPendientes = true;
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            eliminarSistemaActual();
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -71,11 +52,54 @@ namespace SpiderMan
             modificacionesPendientes = false;
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void dgvSistemas_SelectionChanged(object sender, EventArgs e)
+        {
+            if (!cargaEnProgreso)
+            {
+                if (dgvSistemas.CurrentCell != null)
+                {
+                    string nombreElegido = System.Convert.ToString(dgvSistemas.CurrentRow.Cells[colNombreSistema.Name].Value);
+                    sistemaActual = sistemasConfigurados.Find(x => x.Nombre == nombreElegido);
+
+                    indiceSistemaModificado = dgvSistemas.CurrentRow.Index;
+                }
+            }
+        }
+
+        private void frmSistemas_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (modificacionesPendientes)
+            {
+                if (MessageBox.Show("Hay modificaciones pendientes. ¿Desea conservarlas?", "ATENCION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    Sistema.Guardar(sistemasConfigurados);
+            }
+        }
+
+        private void tslAgregar_Click(object sender, EventArgs e)
         {
             agregarSistema();
         }
 
+        private void tslGuardar_Click(object sender, EventArgs e)
+        {
+            Sistema.Guardar(sistemasConfigurados);
+            modificacionesPendientes = false;
+        }
+
+        private void tslEliminar_Click(object sender, EventArgs e)
+        {
+            eliminarSistemaActual();
+        }
+
+        private void tslEditar_Click(object sender, EventArgs e)
+        {
+            editarSistemaActual();
+        }
+
+        private void tslRefrescar_Click(object sender, EventArgs e)
+        {
+            recuperarSistemas();
+        }
 
         /// <summary>
         /// Muestra el formulario para agregar nuevos sistemas y si se realiza la operación, se adiciona el nuevo sistema a la lista.-
@@ -102,11 +126,6 @@ namespace SpiderMan
             tsslCantidadSistemas.Text = sistemasConfigurados.Count.ToString();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            editarSistemaActual();
-        }
-
         /// <summary>
         /// Muestra el formulario de edición de sistemas para permitir la modificación de datos del sistema actual.-
         /// </summary>
@@ -130,34 +149,6 @@ namespace SpiderMan
             }
         }
 
-        private void frmSistemas_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (modificacionesPendientes)
-            {
-                if (MessageBox.Show("Hay modificaciones pendientes. ¿Desea conservarlas?", "ATENCION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    Sistema.Guardar(sistemasConfigurados);
-            }
-        }
-
-        private void dgvSistemas_SelectionChanged(object sender, EventArgs e)
-        {
-            if (!cargaEnProgreso)
-            {
-                if (dgvSistemas.CurrentCell != null)
-                {
-                    string nombreElegido = System.Convert.ToString(dgvSistemas.CurrentRow.Cells[colNombreSistema.Name].Value);
-                    sistemaActual = sistemasConfigurados.Find(x =>  x.Nombre == nombreElegido);
-
-                    indiceSistemaModificado = dgvSistemas.CurrentRow.Index;
-                }
-            }
-        }
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            eliminarSistemaActual();
-        }
-
         /// <summary>
         /// Elimina el sistema actual, si es que hay uno.-
         /// </summary>
@@ -170,7 +161,7 @@ namespace SpiderMan
                 if (MessageBox.Show(mensaje, "Eliminación de Sistemas", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     sistemasConfigurados.Remove(sistemaActual);
-                    
+
                     dgvSistemas.Rows.RemoveAt(dgvSistemas.CurrentRow.Index);
                     tsslCantidadSistemas.Text = sistemasConfigurados.Count.ToString();
                     modificacionesPendientes = true;
@@ -178,30 +169,39 @@ namespace SpiderMan
             }
         }
 
-        private void tslRefrescar_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Recupera la lista de sistemas del almacenamiento.-
+        /// </summary>
+        private void recuperarSistemas()
         {
-            recuperarSistemas();
+            cargaEnProgreso = true;
+            sistemasConfigurados = Sistema.Obtener();
+
+            dgvSistemas.Rows.Clear();
+            object[] valores = new object[8];
+            foreach (Sistema s in sistemasConfigurados)
+            {
+                valores[0] = s.Nombre;
+                valores[1] = s.Descripcion;
+                valores[2] = s.DireccionIP;
+                valores[3] = s.Estado.ToString();
+                dgvSistemas.Rows.Add(valores);
+            }
+
+            if (sistemasConfigurados.Count > 0)
+            {
+                indiceSistemaModificado = 0;
+                sistemaActual = sistemasConfigurados[0];
+                dgvSistemas.Sort(colNombreSistema, ListSortDirection.Ascending);
+            }
+            else
+            {
+                sistemaActual = null;
+            }
+
+            tsslCantidadSistemas.Text = sistemasConfigurados.Count.ToString();
+            cargaEnProgreso = false;
         }
 
-        private void tslGuardar_Click(object sender, EventArgs e)
-        {
-            Sistema.Guardar(sistemasConfigurados);
-            modificacionesPendientes = false;
-        }
-
-        private void tslEliminar_Click(object sender, EventArgs e)
-        {
-            eliminarSistemaActual();
-        }
-
-        private void tslEditar_Click(object sender, EventArgs e)
-        {
-            editarSistemaActual();
-        }
-
-        private void tslAgregar_Click(object sender, EventArgs e)
-        {
-            agregarSistema();
-        }
     }
 }

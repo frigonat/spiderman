@@ -2,7 +2,7 @@
 namespace SpiderMan
 {
 	/// <summary>
-	/// Modela los estados que puede tener un incidente.-
+	/// Modela los estados que puede tener un Sistema IBM i.-
 	/// </summary>
 	public enum EstadosDeSistema : int 
 	{
@@ -14,5 +14,6 @@ namespace SpiderMan
 		/// Incidente asignado a INFOR
 		/// </summary>
 		Deshabilitado = 2,
+
 	}
 }
